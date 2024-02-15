@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-server
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-server
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          env:
+            - name: MINIO_ENDPOINT
+              value: {{ .Values.minioEndpoint }}
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: minio-secret
+                    key: ACCESS_KEY
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: minio-secret
+                    key: SECRET_KEY
+          args:
+            - "--endpoint=$(MINIO_ENDPOINT)"
+            - "--accessKey=$(MINIO_ACCESS_KEY)"
+            - "--secretKey=$(MINIO_SECRET_KEY)"
+            - "--bucket=static-website-bucket"
+            - "--address=0.0.0.0:8080"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
