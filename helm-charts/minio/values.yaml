@@ -1,0 +1,23 @@
+# Default values for minio.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+access_key: minio
+secret_key: minio123
+
+minioServer:
+  image:
+    repository: quay.io/minio/minio
+    tag: RELEASE.2023-10-24T04-42-36Z
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "1024Mi"
+      cpu: "250m"
+  containerPort: 9000
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 9000
