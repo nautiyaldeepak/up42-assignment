@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Chart.Name }}-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-job-container
+          image: {{ .Values.minioJob.image.repository }}:{{ .Values.minioJob.image.tag }}
+          env:
+            - name: MINIO_ENDPOINT
+              value: {{ .Values.minioJob.minioEndpoint }}
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Chart.Name }}-secret
+                    key: ACCESS_KEY
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Chart.Name }}-secret
+                    key: SECRET_KEY
+          resources:
+            {{- toYaml .Values.minioJob.resources | nindent 12 }}
+          command: ["/bin/sh", "-c", "/script/minio-script.sh", "2>&1"]
+          volumeMounts:
+            {{- toYaml .Values.minioJob.volumeMounts | nindent 12 }}
+      restartPolicy: Never
+      volumes:
+        {{- toYaml .Values.minioJob.volume | nindent 8 }}
