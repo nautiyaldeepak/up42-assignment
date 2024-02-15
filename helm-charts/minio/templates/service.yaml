@@ -1,0 +1,14 @@
+---
+kind: Service 
+apiVersion: v1 
+metadata:
+  name: {{ .Chart.Name }}-service
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  type: {{ .Values.minioServer.service.type }}
+  selector:
+    app: {{ .Chart.Name }}
+  ports:
+    - port: {{ .Values.minioServer.service.port }}
+      targetPort: {{ .Values.minioServer.service.targetPort }}
