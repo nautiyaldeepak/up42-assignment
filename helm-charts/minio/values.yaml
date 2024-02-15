@@ -5,6 +5,27 @@
 access_key: minio
 secret_key: minio123
 
+minioJob:
+  image: 
+    repository: alpine
+    tag: 3.19.1
+  minioEndpoint: http://minio-service:80
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "256Mi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+  volumeMounts:
+    - name: script-volume
+      mountPath: /script
+  volume:
+    - name: script-volume
+      configMap:
+        name: minio-script-config
+        defaultMode: 0755
+
 minioServer:
   image:
     repository: quay.io/minio/minio
