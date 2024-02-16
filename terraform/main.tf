@@ -14,10 +14,8 @@ resource "kubernetes_namespace" "monitoring" {
   }
 }
 
-resource "helm_release" "kube-prometheus" {
-  name       = "kube-prometheus-stack"
+resource "helm_release" "prometheus-operator" {
+  name       = "prometheus-operator"
+  chart      = "../helm-charts/prometheus-operator"
   namespace  = "monitoring"
-  version    = "56.6.2"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
 }
