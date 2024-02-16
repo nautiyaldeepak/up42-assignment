@@ -32,7 +32,7 @@ Starting minikube
 minikube start
 ```
 
-## Appling terraform templates
+Appling terraform templates
 > NOTE: Make sure to run the `minikube tunnel` command in a seperate terminal. We'll need it to create LoadBalancer for our service.
 ```
 cd terraform
@@ -40,3 +40,4 @@ terraform init
 terraform plan
 terraform apply
 ```
+> NOTE: After applying our terraform templates, the terminal in which you ran `minikube tunnel` command might ask for password.
