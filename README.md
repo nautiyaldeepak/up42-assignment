@@ -1,11 +1,11 @@
 up42 Assignment
 ===============
 
-Serve static files from Minio bucket.
+Serve gif present in a minio bucket.
 
-> s3www server will service static file stored in [Minio](https://min.io/docs/minio/container/index.html) bucket by keeping the bucket private.
+> s3www microservice will service gif stored in [Minio](https://min.io/docs/minio/container/index.html) bucket by keeping the bucket private.
 
-## Prerequisites
+## Pre-requisites
 - [docker](https://docs.docker.com/engine/install/)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/)
