@@ -22,7 +22,7 @@ data:
     chmod +x mc
 
     #   Downloading gif
-    wget -O giphy.gif https://media.giphy.com/media/VdiQKDAguhDSi37gn1/giphy.gif
+    wget -O giphy.gif $GIF_ENDPOINT
 
     while [ $FLAG == 0 ]
     do

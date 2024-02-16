@@ -12,6 +12,8 @@ spec:
           env:
             - name: MINIO_ENDPOINT
               value: {{ .Values.minioJob.minioEndpoint }}
+            - name: GIF_ENDPOINT
+              value: {{ .Values.minioJob.gifEndpoint }}
             - name: MINIO_ACCESS_KEY
               valueFrom:
                 secretKeyRef:

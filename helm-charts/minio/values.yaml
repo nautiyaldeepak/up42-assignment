@@ -10,6 +10,7 @@ minioJob:
     repository: alpine
     tag: 3.19.1
   minioEndpoint: http://minio-service:80
+  gifEndpoint: https://media.giphy.com/media/VdiQKDAguhDSi37gn1/giphy.gif
   resources:
     limits:
       cpu: "100m"
