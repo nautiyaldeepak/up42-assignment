@@ -25,3 +25,18 @@ Serve static files from Minio bucket.
 - s3www-server is going to server the file stored in the s3 bucket.
 - We'll be using `terraform` templates to deploy our helm charts. 
 - The `terraform` is just being used for deploying our helm-charts, all the necessary configuration is in the values file of the helm-charts.
+
+## Deploy
+Starting minikube
+```
+minikube start
+```
+
+## Appling terraform templates
+> NOTE: Make sure to run the `minikube tunnel` command in a seperate terminal. We'll need it to create LoadBalancer for our service.
+```
+cd terraform
+terraform init
+terraform plan
+terraform apply
+```
