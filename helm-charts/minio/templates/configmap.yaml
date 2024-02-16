@@ -32,7 +32,6 @@ data:
             echo "Minio service is active" 
             ./mc alias set minioclient $MINIO_ENDPOINT $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
             ./mc mb minioclient/static-website-bucket
-            ./mc anonymous set download minioclient/static-website-bucket
             ./mc cp giphy.gif minioclient/static-website-bucket
 
             FLAG=1
