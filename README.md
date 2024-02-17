@@ -41,7 +41,13 @@ terraform apply
 > NOTE: This is the list of issue that you could encounter
 - Backend Initilization Issue
     ```
-    Error: Unable to initialize backend: Storage resources are insufficient for the write operation .minio.sys/pool.bin, retrying in 1.090249964s (*fmt.wrapError)
+    Error: Unable to initialize backend: Storage resources are insufficient for the write operation .minio.sys/pool.bin, retrying in 570.747571ms (*fmt.wrapError)
+        6: internal/logger/logger.go:243:logger.LogIf()
+        5: cmd/erasure-server-pool.go:192:cmd.newErasureServerPools()
+        4: cmd/server-main.go:1059:cmd.newObjectLayer()
+        3: cmd/server-main.go:799:cmd.serverMain.func10()
+        2: cmd/server-main.go:498:cmd.bootstrapTrace()
+        1: cmd/server-main.go:797:cmd.serverMain()
     ```
     This is a stale disk information issue, so usually reboot will fix the problem.
     Start a fresh minikube cluster
