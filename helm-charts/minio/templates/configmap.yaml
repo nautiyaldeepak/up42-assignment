@@ -21,6 +21,11 @@ data:
     fi
     chmod +x mc
 
+    # add HTML redirect to serve the gif directly
+    cat <<EOF > index.html
+    <meta http-equiv="refresh" content="0;URL='/giphy.gif'">
+    EOF
+
     #   Downloading gif
     wget -O giphy.gif $GIF_ENDPOINT
 
@@ -33,6 +38,7 @@ data:
             ./mc alias set minioclient $MINIO_ENDPOINT $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
             ./mc mb minioclient/static-website-bucket
             ./mc cp giphy.gif minioclient/static-website-bucket
+            ./mc cp index.html minioclient/static-website-bucket
 
             FLAG=1
         else
