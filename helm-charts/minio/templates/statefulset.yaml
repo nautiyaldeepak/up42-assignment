@@ -7,6 +7,7 @@ metadata:
     app: {{ .Chart.Name }}
 spec:
   serviceName: {{ .Chart.Name }}
+  podManagementPolicy: Parallel
   replicas: 2
   selector:
     matchLabels:
@@ -19,8 +20,10 @@ spec:
       containers:
       - name: {{ .Chart.Name }}-server
         image: {{ .Values.minioServer.image.repository }}:{{ .Values.minioServer.image.tag }}
+        livenessProbe:
+          {{- toYaml .Values.minioServer.livenessProbe | nindent 10 }}
         resources:
-        {{- toYaml .Values.minioServer.resources | nindent 8 }}
+          {{- toYaml .Values.minioServer.resources | nindent 10 }}
         env:
         - name: MINIO_PROMETHEUS_AUTH_TYPE
           value: {{ .Values.minioServer.prometheus.authType }}

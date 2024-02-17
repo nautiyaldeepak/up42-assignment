@@ -40,6 +40,16 @@ minioServer:
     limits:
       memory: "1024Mi"
       cpu: "250m"
+  livenessProbe:
+    httpGet:
+      path: /minio/health/live
+      port: http
+      scheme: HTTP
+    initialDelaySeconds: 90
+    periodSeconds: 15
+    timeoutSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
   containerPort: 9000
   service:
     type: ClusterIP
