@@ -2,6 +2,21 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+prometheus-adapter:
+  enabled: true
+  prometheus:
+    # Value is templated
+    url: http://prometheus-operated.monitoring.svc.cluster.local
+    port: 9090
+    path: ""
+  rules:
+    custom:
+    - seriesQuery: 'minio_s3_requests_total{api="getobject"}'
+      name:
+        matches: "^minio_s3_"
+        as: "minio_s3_get_requests_total"
+      metricsQuery: 'avg_over_time(<<.Series>>[5m])'
+
 kube-prometheus-stack:
   enabled: true
   prometheus:
