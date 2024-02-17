@@ -10,5 +10,26 @@ spec:
   selector:
     app: {{ .Chart.Name }}
   ports:
-    - port: {{ .Values.minioServer.service.port }}
-      targetPort: {{ .Values.minioServer.service.targetPort }}
+  - name: http
+    port: 80
+    targetPort: {{ .Values.minioServer.service.targetPortApi }}
+  - name: cluster
+    port: 9000
+    targetPort: {{ .Values.minioServer.service.targetPortApi }}
+  - name: console
+    port: 9001
+    targetPort: {{ .Values.minioServer.service.targetPortConsole }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  clusterIP: None
+  ports:
+  - port: {{ .Values.minioServer.service.targetPortApi }}
+  selector:
+    app: {{ .Chart.Name }}

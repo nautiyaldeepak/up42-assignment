@@ -29,8 +29,10 @@ minioJob:
 
 minioServer:
   image:
-    repository: quay.io/minio/minio
-    tag: RELEASE.2023-10-24T04-42-36Z
+    repository: minio/minio
+    tag: latest
+  prometheus:
+    authType: public
   resources:
     requests:
       memory: "256Mi"
@@ -41,5 +43,12 @@ minioServer:
   containerPort: 9000
   service:
     type: ClusterIP
-    port: 80
-    targetPort: 9000
+    targetPortApi: 9000
+    targetPortConsole: 9001
+  volumeMounts:
+    - name: data
+      mountPath: /data
+  volume:
+    - name: data
+      emptyDir:
+        sizeLimit: 100Mi
