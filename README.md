@@ -36,3 +36,16 @@ terraform plan
 terraform apply
 ```
 > NOTE: After applying our terraform templates, the terminal in which you ran `minikube tunnel` command might ask for password.
+
+## Troubleshooting
+> NOTE: This is the list of issue that you could encounter
+- Backend Initilization Issue
+    ```
+    Error: Unable to initialize backend: Storage resources are insufficient for the write operation .minio.sys/pool.bin, retrying in 1.090249964s (*fmt.wrapError)
+    ```
+    This is a stale disk information issue, so usually reboot will fix the problem.
+    Start a fresh minikube cluster
+    ```
+    minikube delete
+    minikube start --nodes=2
+    ```
