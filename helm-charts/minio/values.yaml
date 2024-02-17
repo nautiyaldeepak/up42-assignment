@@ -61,4 +61,4 @@ minioServer:
   volume:
     - name: data
       emptyDir:
-        sizeLimit: 100Mi
+        sizeLimit: 500Mi
