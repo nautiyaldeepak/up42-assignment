@@ -2,8 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-access_key: minio
-secret_key: minio123
+access_key: bWluaW8=
+secret_key: bWluaW8xMjM=
 
 minioJob:
   image: 
@@ -30,7 +30,7 @@ minioJob:
 minioServer:
   image:
     repository: minio/minio
-    tag: latest
+    tag: RELEASE.2023-12-13T23-28-55Z
   prometheus:
     authType: public
   resources:
@@ -45,12 +45,17 @@ minioServer:
       path: /minio/health/live
       port: http
       scheme: HTTP
-    initialDelaySeconds: 90
+    initialDelaySeconds: 60
     periodSeconds: 15
     timeoutSeconds: 10
     successThreshold: 1
     failureThreshold: 3
   containerPort: 9000
+  hpa:
+    minReplicas: 2
+    maxReplicas: 3
+    metricName: minio_s3_requests_per_second
+    metricThreshold: 900m
   service:
     type: ClusterIP
     targetPortApi: 9000
@@ -58,7 +63,6 @@ minioServer:
   volumeMounts:
     - name: data
       mountPath: /data
-  volume:
+  volumes:
     - name: data
-      emptyDir:
-        sizeLimit: 500Mi
+      emptyDir: {}
