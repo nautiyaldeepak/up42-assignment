@@ -5,6 +5,7 @@ metadata:
   name: {{ .Chart.Name }}-service
   labels:
     app: {{ .Chart.Name }}
+    environment: {{ .Values.environment }}
 spec:
   type: {{ .Values.service.type }}
   selector:
