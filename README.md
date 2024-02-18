@@ -22,9 +22,9 @@ Serve gif present in a minio bucket.
 - The `terraform` is just being used for deploying our helm-charts, all the necessary configuration is in the values file of the helm-charts.
 
 ## Deploy
-Starting minikube
+Starting minikube with 2 nodes
 ```
-minikube start
+minikube start --nodes=2
 ```
 
 Appling terraform templates
