@@ -12,28 +12,73 @@ prometheus-adapter:
   rules:
     custom:
     - seriesQuery: 'minio_s3_requests_total{api="getobject"}'
+      resources:
+        overrides:
+          namespace: 
+            resource: "namespace"
+          pod_name: 
+            resource: "pod"
       name:
-        matches: "^minio_s3_"
-        as: "minio_s3_get_requests_total"
-      metricsQuery: 'avg_over_time(<<.Series>>[5m])'
+        matches: "^(.*)_total"
+        as: "${1}_per_second"
+      metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'
 
 kube-prometheus-stack:
   enabled: true
   prometheus:
     prometheusSpec:
       additionalScrapeConfigs:
-        - job_name: minio-job-cluster
-          metrics_path: /minio/v2/metrics/cluster
-          scheme: http
-          static_configs:
-          - targets: [minio-service.default.svc.cluster.local]
-        - job_name: minio-job-bucket
-          metrics_path: /minio/v2/metrics/bucket
-          scheme: http
-          static_configs:
-          - targets: [minio-service.default.svc.cluster.local]
-        - job_name: minio-job-resource
+        - job_name: 'minio-job-resource'
           metrics_path: /minio/v2/metrics/resource
           scheme: http
-          static_configs:
-          - targets: [minio-service.default.svc.cluster.local]
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_namespace]
+              regex: (.*)
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_namespace]
+              regex: (.*)
+              action: keep
+            - source_labels: [__meta_kubernetes_pod_name]
+              regex: (minio-server-.*)
+              target_label: pod_name
+            - source_labels: [__meta_kubernetes_pod_name]
+              regex: minio-server-.*
+              action: keep
+        - job_name: 'minio-job-bucket'
+          metrics_path: /minio/v2/metrics/bucket
+          scheme: http
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_namespace]
+              regex: (.*)
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_namespace]
+              regex: (.*)
+              action: keep
+            - source_labels: [__meta_kubernetes_pod_name]
+              regex: (minio-server-.*)
+              target_label: pod_name
+            - source_labels: [__meta_kubernetes_pod_name]
+              regex: minio-server-.*
+              action: keep
+        - job_name: 'minio-job-cluster'
+          metrics_path: /minio/v2/metrics/cluster
+          scheme: http
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_namespace]
+              regex: (.*)
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_namespace]
+              regex: (.*)
+              action: keep
+            - source_labels: [__meta_kubernetes_pod_name]
+              regex: (minio-server-.*)
+              target_label: pod_name
+            - source_labels: [__meta_kubernetes_pod_name]
+              regex: minio-server-.*
+              action: keep
