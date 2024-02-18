@@ -50,4 +50,4 @@ spec:
         volumeMounts:
         {{- toYaml .Values.minioServer.volumeMounts | nindent 8 }}
       volumes:
-      {{- toYaml .Values.minioServer.volume | nindent 6 }}
+      {{- toYaml .Values.minioServer.volumes | nindent 6 }}
