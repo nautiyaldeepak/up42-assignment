@@ -3,7 +3,7 @@ resource "helm_release" "minio" {
   chart      = "../helm-charts/minio"
 
   values = [
-    "${file("../helm-charts/minio/values-prod.yaml")}"
+    file("${local.values_file.minio}")
   ]
 }
 
@@ -12,7 +12,7 @@ resource "helm_release" "s3www" {
   chart      = "../helm-charts/s3www"
 
   values = [
-    "${file("../helm-charts/s3www/values-prod.yaml")}"
+    file("${local.values_file.s3www}")
   ]
 }
 
@@ -23,6 +23,6 @@ resource "helm_release" "prometheus-operator" {
   create_namespace  = "true"
 
   values = [
-    "${file("../helm-charts/prometheus-operator/values-prod.yaml")}"
+    file("${local.values_file.prometheus_operator}")
   ]
 }
