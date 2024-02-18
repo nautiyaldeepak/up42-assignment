@@ -1,0 +1,59 @@
+# Default values for minio.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+environment: prod
+
+minioJob:
+  image: 
+    repository: alpine
+    tag: 3.19.1
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "256Mi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+  volumeMounts:
+    - name: script-volume
+      mountPath: /script
+  volume:
+    - name: script-volume
+      configMap:
+        name: minio-script-config
+        defaultMode: 0755
+
+minioServer:
+  image:
+    repository: minio/minio
+    tag: RELEASE.2023-12-13T23-28-55Z
+  replicas: 2
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "1024Mi"
+      cpu: "250m"
+  livenessProbe:
+    httpGet:
+      path: /minio/health/live
+      port: http
+      scheme: HTTP
+    initialDelaySeconds: 60
+    periodSeconds: 15
+    timeoutSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
+  hpa:
+    minReplicas: 2
+    maxReplicas: 3
+    metricName: minio_s3_requests_per_second
+    metricThreshold: 2500m
+  volumeMounts:
+    - name: data
+      mountPath: /data
+  volumes:
+    - name: data
+      emptyDir: {}

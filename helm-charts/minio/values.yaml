@@ -6,63 +6,14 @@ access_key: bWluaW8=
 secret_key: bWluaW8xMjM=
 
 minioJob:
-  image: 
-    repository: alpine
-    tag: 3.19.1
   minioEndpoint: http://minio-service:80
   gifEndpoint: https://media.giphy.com/media/VdiQKDAguhDSi37gn1/giphy.gif
-  resources:
-    limits:
-      cpu: "100m"
-      memory: "256Mi"
-    requests:
-      cpu: "50m"
-      memory: "128Mi"
-  volumeMounts:
-    - name: script-volume
-      mountPath: /script
-  volume:
-    - name: script-volume
-      configMap:
-        name: minio-script-config
-        defaultMode: 0755
 
 minioServer:
-  image:
-    repository: minio/minio
-    tag: RELEASE.2023-12-13T23-28-55Z
   prometheus:
     authType: public
-  resources:
-    requests:
-      memory: "256Mi"
-      cpu: "100m"
-    limits:
-      memory: "1024Mi"
-      cpu: "250m"
-  livenessProbe:
-    httpGet:
-      path: /minio/health/live
-      port: http
-      scheme: HTTP
-    initialDelaySeconds: 60
-    periodSeconds: 15
-    timeoutSeconds: 10
-    successThreshold: 1
-    failureThreshold: 3
   containerPort: 9000
-  hpa:
-    minReplicas: 2
-    maxReplicas: 3
-    metricName: minio_s3_requests_per_second
-    metricThreshold: 900m
   service:
     type: ClusterIP
     targetPortApi: 9000
     targetPortConsole: 9001
-  volumeMounts:
-    - name: data
-      mountPath: /data
-  volumes:
-    - name: data
-      emptyDir: {}

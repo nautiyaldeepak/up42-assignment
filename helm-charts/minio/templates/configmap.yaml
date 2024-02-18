@@ -3,6 +3,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}-script-config
+  labels:
+    app: {{ .Chart.Name }}
+    environment: {{ .Values.environment }}
 data:
   minio-script.sh: |
     #!/bin/sh

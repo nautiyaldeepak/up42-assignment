@@ -3,6 +3,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Chart.Name }}-job
+  labels:
+    app: {{ .Chart.Name }}
+    environment: {{ .Values.environment }}
 spec:
   template:
     spec:

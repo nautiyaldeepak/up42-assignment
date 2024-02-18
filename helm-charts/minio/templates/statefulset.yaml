@@ -5,10 +5,11 @@ metadata:
   name: {{ .Chart.Name }}-server
   labels:
     app: {{ .Chart.Name }}
+    environment: {{ .Values.environment }}
 spec:
   serviceName: {{ .Chart.Name }}
   podManagementPolicy: Parallel
-  replicas: 2
+  replicas: {{ .Values.minioServer.replicas }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -16,6 +17,7 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
+        environment: {{ .Values.environment }}
     spec:
       containers:
       - name: {{ .Chart.Name }}-server

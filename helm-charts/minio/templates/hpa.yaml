@@ -3,6 +3,9 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .Chart.Name }}-server-hpa
+  labels:
+    app: {{ .Chart.Name }}
+    environment: {{ .Values.environment }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
