@@ -50,7 +50,7 @@ minioServer:
     minReplicas: 2
     maxReplicas: 3
     metricName: minio_s3_requests_per_second
-    metricThreshold: 2500m
+    metricThreshold: 4500m
   volumeMounts:
     - name: data
       mountPath: /data
