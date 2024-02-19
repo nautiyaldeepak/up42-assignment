@@ -26,7 +26,7 @@ Serve gif present in a minio bucket.
 ## Deploy
 Starting minikube with 2 nodes
 ```
-minikube start --nodes=2
+minikube delete && minikube start --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.bind-address=0.0.0.0 --extra-config=controller-manager.bind-address=0.0.0.0 --nodes=2
 ```
 
 Appling terraform templates
