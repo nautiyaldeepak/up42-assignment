@@ -39,6 +39,13 @@ terraform apply
 ```
 > NOTE: After applying our terraform templates, the terminal in which you ran `minikube tunnel` command might ask for password.
 
+## Cleanup
+Remove all the resources deployed by the stack.
+```
+terraform destroy
+minikube delete
+```
+
 ## Troubleshooting
 > NOTE: This is the list of issue that you could encounter
 - Backend Initilization Issue
@@ -52,8 +59,4 @@ terraform apply
         1: cmd/server-main.go:797:cmd.serverMain()
     ```
     This is a stale disk information issue, so usually reboot will fix the problem.
-    Start a fresh minikube cluster
-    ```
-    minikube delete
-    minikube start --nodes=2
-    ```
+    Start a fresh minikube cluster. Use the minikube command above.
