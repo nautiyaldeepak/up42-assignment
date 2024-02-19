@@ -39,6 +39,13 @@ terraform apply
 ```
 > NOTE: After applying our terraform templates, the terminal in which you ran `minikube tunnel` command might ask for password.
 
+Once the resources are deployed. You can use LoadBalancer to access the web.
+Use the `s3www-service` LoadBalancer.
+```
+kubectl get svc
+```
+> NOTE: The HPA metrics can take sometime to show up.
+
 ## Cleanup
 Remove all the resources deployed by the stack.
 ```
@@ -48,6 +55,12 @@ minikube delete
 
 ## Troubleshooting
 > NOTE: This is the list of issue that you could encounter
+- s3-www service launch issue
+    ```
+    exec /s3www: exec format error
+    ```
+    This is a CPU architecture issue. s3www only has image for ard64 CPU architecture. You are probably using ARM based architecture.
+    Either launch the stack on AMD based CPU architecture or build the [s3www](https://github.com/harshavardhana/s3www) image locally.  
 - Backend Initilization Issue
     ```
     Error: Unable to initialize backend: Storage resources are insufficient for the write operation .minio.sys/pool.bin, retrying in 570.747571ms (*fmt.wrapError)
