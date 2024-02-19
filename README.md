@@ -18,6 +18,8 @@ Serve gif present in a minio bucket.
 - There are 2 helm-charts `minio` & `s3www`. Minio helm-chart will deploy a deployment & a job & s3www helm-chart will be deploying the s3www-server deployment.
 - For `minio` helm-chart, the deployment is a minio-server which is going to emulate the behaviour of s3 and the job is running a script which is going to download the gif and copy it in the minio bucket.
 - s3www-server is going to server the file stored in the s3 bucket.
+- Both `s3www` & `minio` have hpa deployed & are using custom metrics for scaling.
+- We have a 3rd helm chart which is deploying monitoring resources & config. Via this chart we're deploying `prometheus-operator` & `prometheus-adapter`. Prometheus-operator has scrape-config which is going to scrape minio metrics from `/minio/v2/metrics/*` endpoint. Then we're using prometheus-adapter to transform specific prometheus metrics for hpa scaling.
 - We'll be using `terraform` templates to deploy our helm charts. 
 - The `terraform` is just being used for deploying our helm-charts, all the necessary configuration is in the values file of the helm-charts.
 
