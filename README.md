@@ -3,7 +3,7 @@ up42 Assignment
 
 Serve gif present in a minio bucket.
 
-> s3www microservice will service gif stored in [Minio](https://min.io/docs/minio/container/index.html) bucket by keeping the bucket private.
+> [s3www](https://github.com/harshavardhana/s3www) microservice will service gif stored in [Minio](https://min.io/docs/minio/container/index.html) bucket by keeping the bucket private.
 
 ## Pre-requisites
 - [docker](https://docs.docker.com/engine/install/)
