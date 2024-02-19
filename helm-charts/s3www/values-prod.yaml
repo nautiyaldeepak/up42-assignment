@@ -20,5 +20,5 @@ resources:
 hpa:
   minReplicas: 2
   maxReplicas: 3
-  metricName: container_memory_max_usage
+  metricName: container_memory_usage
   metricThreshold: 15m

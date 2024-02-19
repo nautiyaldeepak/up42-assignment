@@ -21,7 +21,7 @@ prometheus-adapter:
         matches: "^(.*)_total"
         as: "${1}_per_second"
       metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
-    - seriesQuery: 'container_memory_max_usage_bytes{container="s3www-server"}'
+    - seriesQuery: 'container_memory_usage_bytes{pod=~"s3www-.*"}'
       resources:
         overrides:
           namespace: 
