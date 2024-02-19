@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 environment: prod
-replicaCount: 3
+replicas: 2
 
 image:
   repository: maymeow/s3www
@@ -11,8 +11,14 @@ image:
 
 resources:
   limits:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 20m
+    memory: 20Mi
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 5m
+    memory: 5Mi
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 3
+  metricName: container_memory_max_usage
+  metricThreshold: 15m
