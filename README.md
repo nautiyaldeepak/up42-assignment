@@ -24,9 +24,9 @@ Serve gif present in a minio bucket.
 - The `terraform` is just being used for deploying our helm-charts, all the necessary configuration is in the values file of the helm-charts.
 
 ## Deploy
-Starting minikube with 2 nodes
+Starting fresh minikube with 2 nodes
 ```
-minikube delete && minikube start --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.bind-address=0.0.0.0 --extra-config=controller-manager.bind-address=0.0.0.0 --nodes=2
+minikube delete && minikube start --nodes=2
 ```
 
 Appling terraform templates
