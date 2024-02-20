@@ -33,7 +33,8 @@ minikube delete && minikube start --nodes=2
 
 Appling terraform templates
 > [!NOTE]
-> Make sure to run the `minikube tunnel` command in a seperate terminal. We'll need it to create LoadBalancer for our service.
+> [1] Make sure to run the `minikube tunnel` command in a seperate terminal. We'll need it to create LoadBalancer for our service.\
+> [2] Also make sure that you `kubeconfig` is in this path - `~/.kube/config`. If not then you need to change the `config_path` in `terraform/provider.tf`.
 ```
 cd terraform
 terraform init
