@@ -24,6 +24,8 @@ Serve gif present in a minio bucket.
 - The `terraform` is just being used for deploying our helm-charts, all the necessary configuration is in the values file of the helm-charts.
 
 ## Deploy
+> [!IMPORTANT]
+> The `s3www` image is only available for `amd64` CPU type architecture. If your system's CPU architecture is `arm64`, in that case the `s3www` container will fail. Either deploy this on amd64 setup or you need to locally create s3www `docker image` and then use it.
 Starting fresh minikube with 2 nodes
 ```
 minikube delete && minikube start --nodes=2
@@ -44,7 +46,8 @@ Use the `s3www-service` LoadBalancer.
 ```
 kubectl get svc
 ```
-> NOTE: The HPA metrics can take sometime to show up.
+> [!TIP]
+> The HPA metrics can take sometime to show up.
 
 ## Cleanup
 Remove all the resources deployed by the stack.
