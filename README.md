@@ -25,21 +25,23 @@ Serve gif present in a minio bucket.
 
 ## Deploy
 > [!IMPORTANT]
-> The `s3www` image is only available for `amd64` CPU type architecture. If your system's CPU architecture is `arm64`, in that case the `s3www` container will fail. Either deploy this on amd64 setup or you need to locally create s3www `docker image` and then use it.
+> The `s3www` image is only available for `amd64` CPU type architecture. If your system's CPU architecture is `arm64`, in that case the `s3www` container will fail. Either deploy this on amd64 setup or you need to locally build s3www `docker image` and then use it.
 Starting fresh minikube with 2 nodes
 ```
 minikube delete && minikube start --nodes=2
 ```
 
 Appling terraform templates
-> NOTE: Make sure to run the `minikube tunnel` command in a seperate terminal. We'll need it to create LoadBalancer for our service.
+> [!NOTE]
+> Make sure to run the `minikube tunnel` command in a seperate terminal. We'll need it to create LoadBalancer for our service.
 ```
 cd terraform
 terraform init
 terraform plan
 terraform apply
 ```
-> NOTE: After applying our terraform templates, the terminal in which you ran `minikube tunnel` command might ask for password.
+> [!NOTE]
+> After applying our terraform templates, the terminal in which you ran `minikube tunnel` command might ask for password.
 
 Once the resources are deployed. You can use LoadBalancer to access the web.
 Use the `s3www-service` LoadBalancer.
