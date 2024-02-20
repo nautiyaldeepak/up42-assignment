@@ -21,8 +21,12 @@ Challenge
  - Horizontal `Autoscaling` is already enabled for both services. This means that as the traffic on our services increase, the services will scale on their own. 
 
 ## Things that can be done furthur
-### Logging & Alerting
+### Logging, Tracing & Alerting
  - `Logging` & `Alerting` can be setup for our services. We already do have `monitoring` stack for our setup but we still need to create custom dashboards to enhance the `observability` of our services. Appling alerting for our services will help us, if there is something extraordinary with our stack.
+ - We can also deploy `openTelemtry` for tracing on our stack.
 
 ### DNS Mapping
  - We do have a `LoadBalancer` it'll do the job for us, but mapping a `DNS` onto our loadBalancer should be the next step.
+
+### Backend for our Terraform Templates
+ - We can initialize a backend for our terraform.
