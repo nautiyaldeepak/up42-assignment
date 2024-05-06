@@ -7,6 +7,7 @@ resource "helm_release" "minio" {
   ]
 }
 
+
 resource "helm_release" "s3www" {
   name       = "s3www"
   chart      = "../helm-charts/s3www"
